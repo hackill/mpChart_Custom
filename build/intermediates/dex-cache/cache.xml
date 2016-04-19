@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/hackill/Downloads/MpChartDemo/app/build/intermediates/exploded-aar/MpChartDemo/MPChartLib2/unspecified/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="2334ff5e243781aa0a8741e744cde248a0d52da9">
+        <dex dex="/Users/hackill/Downloads/MpChartDemo/app/build/intermediates/pre-dexed/debug/MpChartDemo-MPChartLib2-unspecified_574c5dff8bc2608f8ea520030303b2d0a28a8f47.jar" />
+    </item>
+
+</items>
