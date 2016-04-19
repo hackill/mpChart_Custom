@@ -27,13 +27,11 @@ import com.github.mikephil.charting.components.YAxis.YAxisLabelPosition;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.YAxisValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.interfaces.datasets.IDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
@@ -139,7 +137,7 @@ public class BarChartActivity extends DemoBase implements OnSeekBarChangeListene
 
         switch (item.getItemId()) {
             case R.id.actionToggleValues: {
-                for (IDataSet set : mChart.getData().getDataSets())
+                for (DataSet set : mChart.getData().getDataSets())
                     set.setDrawValues(!set.isDrawValuesEnabled());
 
                 mChart.invalidate();
@@ -167,10 +165,10 @@ public class BarChartActivity extends DemoBase implements OnSeekBarChangeListene
                 break;
             }
             case R.id.actionToggleBarBorders: {
-                for (IBarDataSet set : mChart.getData().getDataSets())
-                    ((BarDataSet) set).setBarBorderWidth(set.getBarBorderWidth() == 1.f ? 0.f : 1.f);
+//                for (BarDataSet set : mChart.getData().getDataSets())
+//                    ((BarDataSet) set).setBarBorderWidth(set.getBarBorderWidth() == 1.f ? 0.f : 1.f);
 
-                mChart.invalidate();
+//                mChart.invalidate();
                 break;
             }
             case R.id.actionToggleHighlightArrow: {
@@ -253,34 +251,21 @@ public class BarChartActivity extends DemoBase implements OnSeekBarChangeListene
         val = (float) (Math.random() * mult);
         yVals2.add(new BarEntry(val, count - 1));
 
-        BarDataSet set1;
-        BarDataSet set2;
+        BarDataSet set1 = new BarDataSet(yVals1, "DataSet");
+        set1.setBarSpacePercent(35f);
 
-        if (mChart.getData() != null &&
-                mChart.getData().getDataSetCount() > 0) {
-            set1 = (BarDataSet) mChart.getData().getDataSetByIndex(0);
-            set1.setYVals(yVals1);
-            mChart.getData().setXVals(xVals);
-            mChart.notifyDataSetChanged();
-        } else {
-            set1 = new BarDataSet(yVals1, "DataSet");
-            set1.setBarSpacePercent(35f);
-            set1.setColors(ColorTemplate.MATERIAL_COLORS);
+        BarDataSet set2 = new BarDataSet(yVals2, "dataSet2");
+        set2.setBarSpacePercent(35f);
 
-            set2 = new BarDataSet(yVals2,"dataSet2");
-            set2.setBarSpacePercent(35f);
-            set2.setColors(ColorTemplate.MATERIAL_COLORS2);
 
-            ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
-            dataSets.add(set1);
-            dataSets.add(set2);
+        ArrayList<BarDataSet> dataSets = new ArrayList<>();
+        dataSets.add(set1);
 
-            BarData data = new BarData(xVals, dataSets);
-            data.setValueTextSize(10f);
-            data.setValueTypeface(mTf);
+        BarData data = new BarData(xVals, dataSets);
+        data.setValueTextSize(10f);
+        data.setValueTypeface(mTf);
 
-            mChart.setData(data);
-        }
+        mChart.setData(data);
     }
 
     @SuppressLint("NewApi")

@@ -24,7 +24,6 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
@@ -117,7 +116,6 @@ public class LineChartActivity2 extends DemoBase implements OnSeekBarChangeListe
         leftAxis.setAxisMaxValue(200f);
         leftAxis.setAxisMinValue(0f);
         leftAxis.setDrawGridLines(true);
-        leftAxis.setGranularityEnabled(true);
 
         YAxis rightAxis = mChart.getAxisRight();
         rightAxis.setTypeface(tf);
@@ -125,8 +123,6 @@ public class LineChartActivity2 extends DemoBase implements OnSeekBarChangeListe
         rightAxis.setAxisMaxValue(900);
         rightAxis.setAxisMinValue(-200);
         rightAxis.setDrawGridLines(false);
-        rightAxis.setDrawZeroLine(false);
-        rightAxis.setGranularityEnabled(false);
     }
 
     @Override
@@ -140,10 +136,10 @@ public class LineChartActivity2 extends DemoBase implements OnSeekBarChangeListe
 
         switch (item.getItemId()) {
             case R.id.actionToggleValues: {
-                List<ILineDataSet> sets = mChart.getData()
+                List<LineDataSet> sets = mChart.getData()
                         .getDataSets();
 
-                for (ILineDataSet iSet : sets) {
+                for (LineDataSet iSet : sets) {
 
                     LineDataSet set = (LineDataSet) iSet;
                     set.setDrawValues(!set.isDrawValuesEnabled());
@@ -161,10 +157,10 @@ public class LineChartActivity2 extends DemoBase implements OnSeekBarChangeListe
             }
             case R.id.actionToggleFilled: {
 
-                List<ILineDataSet> sets = mChart.getData()
+                List<LineDataSet> sets = mChart.getData()
                         .getDataSets();
 
-                for (ILineDataSet iSet : sets) {
+                for (LineDataSet iSet : sets) {
 
                     LineDataSet set = (LineDataSet) iSet;
                     if (set.isDrawFilledEnabled())
@@ -176,10 +172,10 @@ public class LineChartActivity2 extends DemoBase implements OnSeekBarChangeListe
                 break;
             }
             case R.id.actionToggleCircles: {
-                List<ILineDataSet> sets = mChart.getData()
+                List<LineDataSet> sets = mChart.getData()
                         .getDataSets();
 
-                for (ILineDataSet iSet : sets) {
+                for (LineDataSet iSet : sets) {
 
                     LineDataSet set = (LineDataSet) iSet;
                     if (set.isDrawCirclesEnabled())
@@ -191,45 +187,45 @@ public class LineChartActivity2 extends DemoBase implements OnSeekBarChangeListe
                 break;
             }
             case R.id.actionToggleCubic: {
-                List<ILineDataSet> sets = mChart.getData()
-                        .getDataSets();
-
-                for (ILineDataSet iSet : sets) {
-
-                    LineDataSet set = (LineDataSet) iSet;
-                    set.setMode(set.getMode() == LineDataSet.Mode.CUBIC_BEZIER
-                            ? LineDataSet.Mode.LINEAR
-                            : LineDataSet.Mode.CUBIC_BEZIER);
-                }
-                mChart.invalidate();
+//                List<ILineDataSet> sets = mChart.getData()
+//                        .getDataSets();
+//
+//                for (ILineDataSet iSet : sets) {
+//
+//                    LineDataSet set = (LineDataSet) iSet;
+//                    set.setMode(set.getMode() == LineDataSet.Mode.CUBIC_BEZIER
+//                            ? LineDataSet.Mode.LINEAR
+//                            : LineDataSet.Mode.CUBIC_BEZIER);
+//                }
+//                mChart.invalidate();
                 break;
             }
             case R.id.actionToggleStepped: {
-                List<ILineDataSet> sets = mChart.getData()
-                        .getDataSets();
-
-                for (ILineDataSet iSet : sets) {
-
-                    LineDataSet set = (LineDataSet) iSet;
-                    set.setMode(set.getMode() == LineDataSet.Mode.STEPPED
-                            ? LineDataSet.Mode.LINEAR
-                            : LineDataSet.Mode.STEPPED);
-                }
-                mChart.invalidate();
+//                List<ILineDataSet> sets = mChart.getData()
+//                        .getDataSets();
+//
+//                for (ILineDataSet iSet : sets) {
+//
+//                    LineDataSet set = (LineDataSet) iSet;
+//                    set.setMode(set.getMode() == LineDataSet.Mode.STEPPED
+//                            ? LineDataSet.Mode.LINEAR
+//                            : LineDataSet.Mode.STEPPED);
+//                }
+//                mChart.invalidate();
                 break;
             }
             case R.id.actionToggleHorizontalCubic: {
-                List<ILineDataSet> sets = mChart.getData()
-                        .getDataSets();
-
-                for (ILineDataSet iSet : sets) {
-
-                    LineDataSet set = (LineDataSet) iSet;
-                    set.setMode(set.getMode() == LineDataSet.Mode.HORIZONTAL_BEZIER
-                            ? LineDataSet.Mode.LINEAR
-                            : LineDataSet.Mode.HORIZONTAL_BEZIER);
-                }
-                mChart.invalidate();
+//                List<ILineDataSet> sets = mChart.getData()
+//                        .getDataSets();
+//
+//                for (ILineDataSet iSet : sets) {
+//
+//                    LineDataSet set = (LineDataSet) iSet;
+//                    set.setMode(set.getMode() == LineDataSet.Mode.HORIZONTAL_BEZIER
+//                            ? LineDataSet.Mode.LINEAR
+//                            : LineDataSet.Mode.HORIZONTAL_BEZIER);
+//                }
+//                mChart.invalidate();
                 break;
             }
             case R.id.actionTogglePinch: {
@@ -309,7 +305,7 @@ public class LineChartActivity2 extends DemoBase implements OnSeekBarChangeListe
         ArrayList<Entry> yVals2 = new ArrayList<Entry>();
 
         for (int i = 0; i < count; ) {
-            float mult = range ;
+            float mult = range;
             float val = (float) (Math.random() * mult) + 450;// + (float)
             // ((mult *
             // 0.1) / 10);
@@ -319,64 +315,52 @@ public class LineChartActivity2 extends DemoBase implements OnSeekBarChangeListe
 
         LineDataSet set1, set2;
 
-        if (mChart.getData() != null &&
-                mChart.getData().getDataSetCount() > 0) {
-            set1 = (LineDataSet) mChart.getData().getDataSetByIndex(0);
-            set2 = (LineDataSet) mChart.getData().getDataSetByIndex(1);
-            set1.setYVals(yVals1);
-            set2.setYVals(yVals1);
-            mChart.getData().setXVals(xVals);
-            mChart.notifyDataSetChanged();
-        } else {
-            // create a dataset and give it a type
-            set1 = new LineDataSet(yVals1, "DataSet 1");
+        // create a dataset and give it a type
+        set1 = new LineDataSet(yVals1, "DataSet 1");
 
-            set1.setAxisDependency(AxisDependency.LEFT);
-            set1.setColor(ColorTemplate.getHoloBlue());
-            set1.setCircleColor(Color.WHITE);
-            set1.setLineWidth(2f);
-            set1.setCircleRadius(3f);
-            set1.setFillAlpha(65);
-            set1.setFillColor(ColorTemplate.getHoloBlue());
-            set1.setHighLightColor(Color.rgb(244, 117, 117));
-            set1.setDrawCircleHole(false);
-            //set1.setFillFormatter(new MyFillFormatter(0f));
-            //set1.setDrawHorizontalHighlightIndicator(false);
-            //set1.setVisible(false);
-            //set1.setCircleHoleColor(Color.WHITE);
+        set1.setAxisDependency(AxisDependency.LEFT);
+        set1.setColor(ColorTemplate.getHoloBlue());
+        set1.setCircleColor(Color.WHITE);
+        set1.setLineWidth(2f);
+        set1.setFillAlpha(65);
+        set1.setFillColor(ColorTemplate.getHoloBlue());
+        set1.setHighLightColor(Color.rgb(244, 117, 117));
+        set1.setDrawCircleHole(false);
+        //set1.setFillFormatter(new MyFillFormatter(0f));
+        //set1.setDrawHorizontalHighlightIndicator(false);
+        //set1.setVisible(false);
+        //set1.setCircleHoleColor(Color.WHITE);
 
-            // create a dataset and give it a type
-            set2 = new LineDataSet(yVals2, "DataSet 2");
-            set2.setAxisDependency(AxisDependency.RIGHT);
-            set2.setColor(Color.RED);
-            set2.setCircleColor(Color.WHITE);
-            set2.setLineWidth(2f);
-            set2.setCircleRadius(3f);
-            set2.setFillAlpha(65);
-            set2.setFillColor(Color.RED);
-            set2.setDrawCircleHole(false);
-            set2.setHighLightColor(Color.rgb(244, 117, 117));
-            //set2.setFillFormatter(new MyFillFormatter(900f));
+        // create a dataset and give it a type
+        set2 = new LineDataSet(yVals2, "DataSet 2");
+        set2.setAxisDependency(AxisDependency.RIGHT);
+        set2.setColor(Color.RED);
+        set2.setCircleColor(Color.WHITE);
+        set2.setLineWidth(2f);
+        set2.setFillAlpha(65);
+        set2.setFillColor(Color.RED);
+        set2.setDrawCircleHole(false);
+        set2.setHighLightColor(Color.rgb(244, 117, 117));
+        //set2.setFillFormatter(new MyFillFormatter(900f));
 
-            ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
-            dataSets.add(set2);
-            dataSets.add(set1); // add the datasets
+        ArrayList<LineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(set2);
+        dataSets.add(set1); // add the datasets
 
-            // create a data object with the datasets
-            LineData data = new LineData(xVals, dataSets);
-            data.setValueTextColor(Color.WHITE);
-            data.setValueTextSize(9f);
+        // create a data object with the datasets
+        LineData data = new LineData(xVals, dataSets);
+        data.setValueTextColor(Color.WHITE);
+        data.setValueTextSize(9f);
 
-            // set data
-            mChart.setData(data);
-        }
+        // set data
+        mChart.setData(data);
     }
 
     @Override
     public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
         Log.i("Entry selected", e.toString());
 
-        mChart.centerViewToAnimated(e.getXIndex(), e.getVal(), mChart.getData().getDataSetByIndex(dataSetIndex).getAxisDependency(), 500);
+//        mChart.centerViewToAnimated(e.getXIndex(), e.getVal(), mChart.getData().getDataSetByIndex(dataSetIndex).getAxisDependency(), 500);
         //mChart.zoomAndCenterAnimated(2.5f, 2.5f, e.getXIndex(), e.getVal(), mChart.getData().getDataSetByIndex(dataSetIndex).getAxisDependency(), 1000);
         //mChart.zoomAndCenterAnimated(1.8f, 1.8f, e.getXIndex(), e.getVal(), mChart.getData().getDataSetByIndex(dataSetIndex).getAxisDependency(), 1000);
     }

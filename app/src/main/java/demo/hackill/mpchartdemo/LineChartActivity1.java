@@ -28,7 +28,6 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
@@ -178,10 +177,10 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
 
         switch (item.getItemId()) {
             case R.id.actionToggleValues: {
-                List<ILineDataSet> sets = mChart.getData()
+                List<LineDataSet> sets = mChart.getData()
                         .getDataSets();
 
-                for (ILineDataSet iSet : sets) {
+                for (LineDataSet iSet : sets) {
 
                     LineDataSet set = (LineDataSet) iSet;
                     set.setDrawValues(!set.isDrawValuesEnabled());
@@ -199,10 +198,10 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
             }
             case R.id.actionToggleFilled: {
 
-                List<ILineDataSet> sets = mChart.getData()
+                List<LineDataSet> sets = mChart.getData()
                         .getDataSets();
 
-                for (ILineDataSet iSet : sets) {
+                for (LineDataSet iSet : sets) {
 
                     LineDataSet set = (LineDataSet) iSet;
                     if (set.isDrawFilledEnabled())
@@ -214,10 +213,10 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
                 break;
             }
             case R.id.actionToggleCircles: {
-                List<ILineDataSet> sets = mChart.getData()
+                List<LineDataSet> sets = mChart.getData()
                         .getDataSets();
 
-                for (ILineDataSet iSet : sets) {
+                for (LineDataSet iSet : sets) {
 
                     LineDataSet set = (LineDataSet) iSet;
                     if (set.isDrawCirclesEnabled())
@@ -229,45 +228,45 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
                 break;
             }
             case R.id.actionToggleCubic: {
-                List<ILineDataSet> sets = mChart.getData()
-                        .getDataSets();
-
-                for (ILineDataSet iSet : sets) {
-
-                    LineDataSet set = (LineDataSet) iSet;
-                    set.setMode(set.getMode() == LineDataSet.Mode.CUBIC_BEZIER
-                            ? LineDataSet.Mode.LINEAR
-                            : LineDataSet.Mode.CUBIC_BEZIER);
-                }
-                mChart.invalidate();
+//                List<LineDataSet> sets = mChart.getData()
+//                        .getDataSets();
+//
+//                for (LineDataSet iSet : sets) {
+//
+//                    LineDataSet set = (LineDataSet) iSet;
+//                    set.setMode(set.getMode() == LineDataSet.Mode.CUBIC_BEZIER
+//                            ? LineDataSet.Mode.LINEAR
+//                            : LineDataSet.Mode.CUBIC_BEZIER);
+//                }
+//                mChart.invalidate();
                 break;
             }
             case R.id.actionToggleStepped: {
-                List<ILineDataSet> sets = mChart.getData()
-                        .getDataSets();
-
-                for (ILineDataSet iSet : sets) {
-
-                    LineDataSet set = (LineDataSet) iSet;
-                    set.setMode(set.getMode() == LineDataSet.Mode.STEPPED
-                            ? LineDataSet.Mode.LINEAR
-                            : LineDataSet.Mode.STEPPED);
-                }
-                mChart.invalidate();
+//                List<LineDataSet> sets = mChart.getData()
+//                        .getDataSets();
+//
+//                for (LineDataSet iSet : sets) {
+//
+//                    LineDataSet set = (LineDataSet) iSet;
+//                    set.setMode(set.getMode() == LineDataSet.Mode.STEPPED
+//                            ? LineDataSet.Mode.LINEAR
+//                            : LineDataSet.Mode.STEPPED);
+//                }
+//                mChart.invalidate();
                 break;
             }
             case R.id.actionToggleHorizontalCubic: {
-                List<ILineDataSet> sets = mChart.getData()
-                        .getDataSets();
-
-                for (ILineDataSet iSet : sets) {
-
-                    LineDataSet set = (LineDataSet) iSet;
-                    set.setMode(set.getMode() == LineDataSet.Mode.HORIZONTAL_BEZIER
-                            ? LineDataSet.Mode.LINEAR
-                            : LineDataSet.Mode.HORIZONTAL_BEZIER);
-                }
-                mChart.invalidate();
+//                List<ILineDataSet> sets = mChart.getData()
+//                        .getDataSets();
+//
+//                for (ILineDataSet iSet : sets) {
+//
+//                    LineDataSet set = (LineDataSet) iSet;
+//                    set.setMode(set.getMode() == LineDataSet.Mode.HORIZONTAL_BEZIER
+//                            ? LineDataSet.Mode.LINEAR
+//                            : LineDataSet.Mode.HORIZONTAL_BEZIER);
+//                }
+//                mChart.invalidate();
                 break;
             }
             case R.id.actionTogglePinch: {
@@ -355,47 +354,40 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
 
         LineDataSet set1;
 
-        if (mChart.getData() != null &&
-                mChart.getData().getDataSetCount() > 0) {
-            set1 = (LineDataSet) mChart.getData().getDataSetByIndex(0);
-            set1.setYVals(yVals);
-            mChart.getData().setXVals(xVals);
-            mChart.notifyDataSetChanged();
-        } else {
-            // create a dataset and give it a type
-            set1 = new LineDataSet(yVals, "DataSet ..1");
 
-            // set1.setFillAlpha(110);
-            // set1.setFillColor(Color.RED);
+        // create a dataset and give it a type
+        set1 = new LineDataSet(yVals, "DataSet ..1");
 
-            // set the line to be drawn like this "- - - - - -"
-            set1.enableDashedLine(10f, 5f, 0f);
-            set1.enableDashedHighlightLine(10f, 5f, 0f);
-            set1.setColor(Color.BLACK);
-            set1.setCircleColor(Color.BLACK);
-            set1.setLineWidth(1f);
+        // set1.setFillAlpha(110);
+        // set1.setFillColor(Color.RED);
+
+        // set the line to be drawn like this "- - - - - -"
+        set1.enableDashedLine(10f, 5f, 0f);
+        set1.enableDashedHighlightLine(10f, 5f, 0f);
+        set1.setColor(Color.BLACK);
+        set1.setCircleColor(Color.BLACK);
+        set1.setLineWidth(1f);
 //            set1.setCircleRadius(3f);
-            set1.setDrawCircleHole(false);
-            set1.setValueTextSize(9f);
-            set1.setDrawFilled(true);
+        set1.setDrawCircleHole(false);
+        set1.setValueTextSize(9f);
+        set1.setDrawFilled(true);
 
-            if (Utils.getSDKInt() >= 18) {
-                // fill drawable only supported on api level 18 and above
-                Drawable drawable = ContextCompat.getDrawable(this, R.drawable.fade_red);
-                set1.setFillColor(Color.RED);
-            } else {
-                set1.setFillColor(Color.BLACK);
-            }
-
-            ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
-            dataSets.add(set1); // add the datasets
-
-            // create a data object with the datasets
-            LineData data = new LineData(xVals, dataSets);
-
-            // set data
-            mChart.setData(data);
+        if (Utils.getSDKInt() >= 18) {
+            // fill drawable only supported on api level 18 and above
+            Drawable drawable = ContextCompat.getDrawable(this, R.drawable.fade_red);
+            set1.setFillColor(Color.RED);
+        } else {
+            set1.setFillColor(Color.BLACK);
         }
+
+        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
+        dataSets.add(set1); // add the datasets
+
+        // create a data object with the datasets
+        LineData data = new LineData(xVals, dataSets);
+
+        // set data
+        mChart.setData(data);
     }
 
     @Override

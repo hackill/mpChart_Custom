@@ -14,7 +14,7 @@ import demo.hackill.mpchartdemo.R;
 
 /**
  * Custom implementation of the MarkerView.
- * 
+ *
  * @author Philipp Jahoda
  */
 public class MyMarkerView extends MarkerView {
@@ -44,13 +44,13 @@ public class MyMarkerView extends MarkerView {
     }
 
     @Override
-    public int getXOffset(float xpos) {
+    public int getXOffset(float xpos, int pWidt) {
         // this will center the marker-view horizontally
         return -(getWidth() / 2);
     }
 
     @Override
-    public int getYOffset(float ypos) {
+    public int getYOffset(float ypos, int pWidt) {
         // this will cause the marker-view to be above the selected value
         return -getHeight();
     }
