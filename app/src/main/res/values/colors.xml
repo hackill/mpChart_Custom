@@ -3,4 +3,17 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+
+    <color name="sport_bg_end">#3189E1</color>
+    <color name="sport_bg_start">#123F8D</color>
+
+
+    <color name="white">#FFFFFF</color>
+    <color name="item_selected">#beddff</color>
+    <color name="transparent">#00000000</color>
+    <color name="background">#2000ff00</color>
+
+    <color name="step_top">#0D57A3</color>
+    <color name="step_bottom">#3898FC</color>
 </resources>

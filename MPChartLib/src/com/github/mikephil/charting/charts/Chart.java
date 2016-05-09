@@ -711,9 +711,9 @@ public abstract class Chart<T extends ChartData<? extends DataSet<? extends Entr
 
                 if (pos[1] - mMarkerView.getHeight() <= 0) {
                     float y = mMarkerView.getHeight() - pos[1];
-                    mMarkerView.draw(canvas, pos[0], pos[1] + y, getWidth(), getHeight());
+                    mMarkerView.draw(canvas, pos[0], pos[1] + y, getWidth(), mMarkerView.getMeasuredHeight(),mViewPortHandler.contentTop());
                 } else {
-                    mMarkerView.draw(canvas, pos[0], pos[1], getWidth(), getHeight());
+                    mMarkerView.draw(canvas, pos[0], pos[1], getWidth(), mMarkerView.getMeasuredHeight(),mViewPortHandler.contentTop());
                 }
             }
         }

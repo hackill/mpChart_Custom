@@ -240,6 +240,11 @@ public class YAxisRenderer extends AxisRenderer {
             if (!mYAxis.isDrawTopYLabelEntryEnabled() && i >= mYAxis.mEntryCount - 1)
                 return;
 
+            if (i == 0) {
+                // 是否draw 第一个
+                continue;
+            }
+
             c.drawText(text, fixedPosition, positions[i * 2 + 1] + offset, mAxisLabelPaint);
         }
     }
@@ -307,8 +312,8 @@ public class YAxisRenderer extends AxisRenderer {
 
             mTrans.pointValuesToPixel(pts);
 
-            limitLinePath.moveTo(mViewPortHandler.contentLeft(), pts[1]);
-            limitLinePath.lineTo(mViewPortHandler.contentRight(), pts[1]);
+            limitLinePath.moveTo(mViewPortHandler.contentLeft() - mViewPortHandler.offsetLeft(), pts[1]);
+            limitLinePath.lineTo(mViewPortHandler.contentRight() + mViewPortHandler.offsetRight(), pts[1]);
 
             c.drawPath(limitLinePath, mLimitLinePaint);
             limitLinePath.reset();

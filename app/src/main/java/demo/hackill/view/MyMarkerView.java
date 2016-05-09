@@ -54,4 +54,9 @@ public class MyMarkerView extends MarkerView {
         // this will cause the marker-view to be above the selected value
         return -getHeight();
     }
+
+    @Override
+    public int getTipYOffSet(float translateY, int markViewHeight, float containerTop) {
+        return 0;
+    }
 }

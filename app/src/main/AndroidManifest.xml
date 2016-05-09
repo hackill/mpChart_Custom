@@ -19,6 +19,7 @@
         <activity android:name=".LineChartActivity2" />
         <activity android:name=".BarChartActivity" />
         <activity android:name=".SportChartActivity" />
+        <activity android:name=".BgActivity" />
     </application>
 
 </manifest>

@@ -199,11 +199,13 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
         // execute all drawing commands
         drawGridBackground(canvas);
 
+        // 计算y轴的展示点 以及点的数值 (可根据设置进行一些轻微变动,比如是否均分,是否只显示起始与终点等)
         if (mAxisLeft.isEnabled())
             mAxisRendererLeft.computeAxis(mAxisLeft.mAxisMinimum, mAxisLeft.mAxisMaximum);
         if (mAxisRight.isEnabled())
             mAxisRendererRight.computeAxis(mAxisRight.mAxisMinimum, mAxisRight.mAxisMaximum);
 
+        //绘制边线 很神奇的线  难看的线竖线
         mXAxisRenderer.renderAxisLine(canvas);
         mAxisRendererLeft.renderAxisLine(canvas);
         mAxisRendererRight.renderAxisLine(canvas);
@@ -230,19 +232,23 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
         int clipRestoreCount = canvas.save();
 //        canvas.clipRect(mViewPortHandler.getContentRect());
 
+        //绘制x轴背景网格
         mXAxisRenderer.renderGridLines(canvas);
+        // 绘制背景网格
         mAxisRendererLeft.renderGridLines(canvas);
         mAxisRendererRight.renderGridLines(canvas);
 
         if (mXAxis.isDrawLimitLinesBehindDataEnabled())
             mXAxisRenderer.renderLimitLines(canvas);
 
+        // 如果绘制线在数据下面 则先绘制limitlines线
         if (mAxisLeft.isDrawLimitLinesBehindDataEnabled())
             mAxisRendererLeft.renderLimitLines(canvas);
 
         if (mAxisRight.isDrawLimitLinesBehindDataEnabled())
             mAxisRendererRight.renderLimitLines(canvas);
 
+//        // 绘制柱形条
         mRenderer.drawData(canvas);
 
         if (!mXAxis.isDrawLimitLinesBehindDataEnabled())
@@ -254,24 +260,30 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
         if (!mAxisRight.isDrawLimitLinesBehindDataEnabled())
             mAxisRendererRight.renderLimitLines(canvas);
 
+        //绘制x轴上的数据
         mXAxisRenderer.renderAxisLabels(canvas);
 
+        // 绘制左右y抽的数据
+        mAxisRendererLeft.renderAxisLabels(canvas);
+        mAxisRendererRight.renderAxisLabels(canvas);
 
+        //点击会变暗了的效果
         // if highlighting is enabled
         if (valuesToHighlight())
             mRenderer.drawHighlighted(canvas, mIndicesToHighlight);
 
-        // Removes clipping rectangle
-        canvas.restoreToCount(clipRestoreCount);
+        // Removes clipping rectangle 不理解这句
+//        canvas.restoreToCount(clipRestoreCount);
 
+        // 绘制拓展的东西 可以继承这个方法进行绘制
         mRenderer.drawExtras(canvas);
 
-        mAxisRendererLeft.renderAxisLabels(canvas);
-        mAxisRendererRight.renderAxisLabels(canvas);
+//
+//        // 绘制柱形图上面的数字
+//        mRenderer.drawValues(canvas);
 
-        mRenderer.drawValues(canvas);
-
-        mLegendRenderer.renderLegend(canvas);
+//        绘制数据源
+//        mLegendRenderer.renderLegend(canvas);
 
         drawMarkers(canvas);
 

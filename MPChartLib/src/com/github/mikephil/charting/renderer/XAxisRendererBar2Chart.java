@@ -1,20 +1,22 @@
 package com.github.mikephil.charting.renderer;
 
 import android.graphics.Canvas;
+import android.util.Log;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.utils.Transformer;
-import com.github.mikephil.charting.utils.Utils;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
-public class XAxisRendererBarChart extends XAxisRenderer {
+public class XAxisRendererBar2Chart extends XAxisRenderer {
+
+    public final static String TAG = XAxisRendererBar2Chart.class.getSimpleName();
 
     protected BarChart mChart;
 
-    public XAxisRendererBarChart(ViewPortHandler viewPortHandler, XAxis xAxis, Transformer trans,
-                                 BarChart chart) {
+    public XAxisRendererBar2Chart(ViewPortHandler viewPortHandler, XAxis xAxis, Transformer trans,
+                                  BarChart chart) {
         super(viewPortHandler, xAxis, trans);
 
         this.mChart = chart;
@@ -35,45 +37,58 @@ public class XAxisRendererBarChart extends XAxisRenderer {
 
         BarData bd = mChart.getData();
         int step = bd.getDataSetCount();
+        Log.i(TAG, "drawLabels: mMinx = " + mMinX + ", mMax = " + mMaxX + " modulus= " + mXAxis.mAxisLabelModulus);
 
-        for (int i = mMinX; i <= mMaxX; i += mXAxis.mAxisLabelModulus) {
+        for (int i = mMinX; i < mMaxX; i++) {
+
+            if (i == mMinX) {
+                //起始点
+            } else if (i == (mMinX + mMaxX) / 2) {
+                // 中间点
+                position[0] = i * step + i * bd.getGroupSpace()
+                        + bd.getGroupSpace() / 2f;
+                // consider groups (center label for each group)
+                if (step > 1) {
+                    position[0] += ((float) step - 1f) / 2f;
+                }
+            } else if (i == mMaxX - 1) {
+            } else {
+                continue;
+            }
 
             position[0] = i * step + i * bd.getGroupSpace()
                     + bd.getGroupSpace() / 2f;
-
             // consider groups (center label for each group)
             if (step > 1) {
                 position[0] += ((float) step - 1f) / 2f;
             }
-
             mTrans.pointValuesToPixel(position);
 
 
+            Log.i(TAG, "drawLabels: " + "postion[0]" + position[0] + ", isInboudnsX = " + mViewPortHandler.isInBoundsX(position[0]) + ", i = " + i);
 
-            if (i >= 0 && i < mXAxis.getValues().size()) {
+            String label = mXAxis.getValues().get(i);
 
-                String label = mXAxis.getValues().get(i);
+//            if (mXAxis.isAvoidFirstLastClippingEnabled()) {
+//
+//                // avoid clipping of the last
+//                if (i == mXAxis.getValues().size() - 1) {
+//                    float width = Utils.calcTextWidth(mAxisLabelPaint, label);
+//
+//                    if (width > mViewPortHandler.offsetRight() * 2
+//                            && position[0] + width > mViewPortHandler.getChartWidth())
+//                        position[0] -= width / 2;
+//
+//                    // avoid clipping of the first
+//                } else if (i == 0) {
+//
+//                    float width = Utils.calcTextWidth(mAxisLabelPaint, label);
+//                    position[0] += width / 2;
+//                }
+//            }
 
-                if (mXAxis.isAvoidFirstLastClippingEnabled()) {
+            drawLabel(c, label, i, position[0], pos);
 
-                    // avoid clipping of the last
-                    if (i == mXAxis.getValues().size() - 1) {
-                        float width = Utils.calcTextWidth(mAxisLabelPaint, label);
-
-                        if (width > mViewPortHandler.offsetRight() * 2
-                                && position[0] + width > mViewPortHandler.getChartWidth())
-                            position[0] -= width / 2;
-
-                        // avoid clipping of the first
-                    } else if (i == 0) {
-
-                        float width = Utils.calcTextWidth(mAxisLabelPaint, label);
-                        position[0] += width / 2;
-                    }
-                }
-
-                drawLabel(c, label, i, position[0], pos);
-            }
         }
     }
 

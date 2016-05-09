@@ -51,11 +51,30 @@ public abstract class MarkerView extends RelativeLayout {
      * @param posx
      * @param posy
      */
-    public void draw(Canvas canvas, float posx, float posy, int pWidth, int pHeight) {
+    public void draw(Canvas canvas, float posx, float posy, int containWidth, int markViewHeight) {
 
         // take offsets into consideration
-        posx += getXOffset(posx, pWidth);
-        posy += getYOffset(posy, pHeight);
+        posx += getXOffset(posx, containWidth);
+        posy += getYOffset(posy, markViewHeight);
+
+        // translate to the correct position and draw
+        canvas.translate(posx, posy);
+        draw(canvas);
+        canvas.translate(-posx, -posy);
+    }
+
+    /**
+     * Draws the MarkerView on the given position on the screen with the given Canvas object.
+     *
+     * @param canvas
+     * @param posx
+     * @param posy
+     */
+    public void draw(Canvas canvas, float posx, float posy, int containWidth, int markViewHeight, float containerTop) {
+
+        // take offsets into consideration
+        posx += getXOffset(posx, containWidth);
+        posy += getTipYOffSet(posy, markViewHeight, containerTop);
 
         // translate to the correct position and draw
         canvas.translate(posx, posy);
@@ -79,7 +98,7 @@ public abstract class MarkerView extends RelativeLayout {
      *
      * @return
      */
-    public abstract int getXOffset(float translateX, int pWidth);
+    public abstract int getXOffset(float translateX, int containWidth);
 
     /**
      * Use this to return the desired position offset you wish the MarkerView to have on the y-axis. By returning
@@ -87,5 +106,7 @@ public abstract class MarkerView extends RelativeLayout {
      *
      * @return
      */
-    public abstract int getYOffset(float translateY, int pHeight);
+    public abstract int getYOffset(float translateY, int markViewHeight);
+
+    public abstract int getTipYOffSet(float translateY, int markViewHeight, float containerTop);
 }
