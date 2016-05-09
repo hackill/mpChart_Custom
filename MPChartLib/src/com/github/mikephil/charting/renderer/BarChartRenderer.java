@@ -153,13 +153,13 @@ public class BarChartRenderer extends DataRenderer {
     }
 
 
-    private void drawBar(Canvas c, float left, float top, float right, float bottom) {
+    protected void drawBar(Canvas c, float left, float top, float right, float bottom) {
         mTmpRect.set(left, top, right, bottom);
         float rc = Math.min(mTmpRect.width(), mTmpRect.height()) / 2f;
         c.drawRoundRect(mTmpRect, rc, rc, mRenderPaint);
     }
 
-    private void drawHighlightBar(Canvas c) {
+    protected void drawHighlightBar(Canvas c) {
         float rc = Math.min(mBarRect.width(), mBarRect.height()) / 2f;
         c.drawRoundRect(mBarRect, rc, rc, mHighlightPaint);
     }

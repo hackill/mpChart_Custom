@@ -28,10 +28,11 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.YAxisValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.renderer.BarChart2Renderer;
 import com.github.mikephil.charting.renderer.XAxisRenderer;
-import com.github.mikephil.charting.renderer.XAxisRendererBar2Chart;
 import com.github.mikephil.charting.renderer.XAxisRendererBarChart;
+import com.github.mikephil.charting.renderer.custom.BarChartSportRenderer;
+import com.github.mikephil.charting.renderer.custom.XAxisRendererSportBarChart;
+import com.github.mikephil.charting.renderer.custom.YAxisSportRenderer;
 
 import java.util.ArrayList;
 
@@ -127,6 +128,9 @@ public class SportChartActivity extends FragmentActivity implements OnChartValue
 
         mChart.setDrawGridBackground(true);
 
+        //(mViewPortHandler, mAxisLeft, mLeftAxisTransformer
+        mChart.setRendererLeftYAxis(new YAxisSportRenderer(mChart.getViewPortHandler(), mChart.getAxisLeft(), mChart.getTransformer(YAxis.AxisDependency.LEFT)));
+
 //        mChart.setViewPortOffsets(0,0,0,0);
         mChart.setExtraTopOffset(25);
 
@@ -136,7 +140,7 @@ public class SportChartActivity extends FragmentActivity implements OnChartValue
 
         mChart.setGridBackgroundColor(getResources().getColor(R.color.transparent));
 
-        BarChart2Renderer cbcr = new BarChart2Renderer(mChart, mChart.getAnimator(), mChart.getViewPortHandler());
+        BarChartSportRenderer cbcr = new BarChartSportRenderer(mChart, mChart.getAnimator(), mChart.getViewPortHandler());
 //        cbcr.setShader(getResources().getColor(R.color.step_top), getResources().getColor(R.color.step_bottom));
         mChart.setRenderer(cbcr);
 
@@ -223,10 +227,6 @@ public class SportChartActivity extends FragmentActivity implements OnChartValue
         l.setFormSize(9f);
         l.setTextSize(11f);
         l.setXEntrySpace(4f);
-        // l.setExtra(ColorTemplate.VORDIPLOM_COLORS, new String[] { "abc",
-        // "def", "ghj", "ikl", "mno" });
-        // l.setCustom(ColorTemplate.VORDIPLOM_COLORS, new String[] { "abc",
-        // "def", "ghj", "ikl", "mno" });
 
         setData(xCount, max, type);
         updateLeftAxis(type);
@@ -291,7 +291,7 @@ public class SportChartActivity extends FragmentActivity implements OnChartValue
         XAxisRenderer xAxisRenderer = null;
         if (type == 1) {
             xAxis.resetLabelsToSkip();
-            xAxisRenderer = new XAxisRendererBar2Chart(mChart.getViewPortHandler(), mChart.getXAxis(), mChart.getTransformer(YAxis.AxisDependency.LEFT), mChart);
+            xAxisRenderer = new XAxisRendererSportBarChart(mChart.getViewPortHandler(), mChart.getXAxis(), mChart.getTransformer(YAxis.AxisDependency.LEFT), mChart);
         } else if (type == 2) {
             xAxis.setLabelsToSkip(0);
             xAxisRenderer = new XAxisRendererBarChart(mChart.getViewPortHandler(), mChart.getXAxis(), mChart.getTransformer(YAxis.AxisDependency.LEFT), mChart);
@@ -330,13 +330,13 @@ public class SportChartActivity extends FragmentActivity implements OnChartValue
 
     @Override
     public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-        Log.d(TAG, "onValueSelected() called with: " + "e = [" + e + "], dataSetIndex = [" + dataSetIndex + "], h = [" + h + "]");
+//        Log.d(TAG, "onValueSelected() called with: " + "e = [" + e + "], dataSetIndex = [" + dataSetIndex + "], h = [" + h + "]");
 
     }
 
     @Override
     public void onNothingSelected() {
-        Log.d(TAG, "onNothingSelected() called with: " + "");
+//        Log.d(TAG, "onNothingSelected() called with: " + "");
 
     }
 
@@ -384,6 +384,8 @@ public class SportChartActivity extends FragmentActivity implements OnChartValue
         set1.setBarSpacePercent(35f);
         set1.setColor(getResources().getColor(R.color.white));
         set1.setHighLightColor(getResources().getColor(R.color.item_selected));
+        set1.setHighLightAlpha(255);
+        set1.setDrawValues(false);
 
 //        BarDataSet set2 = new BarDataSet(yVals2, "dataSet2");
 //        set2.setBarSpacePercent(35f);
@@ -428,7 +430,7 @@ public class SportChartActivity extends FragmentActivity implements OnChartValue
 
         @Override
         public int getXOffset(float translateX, int pWidth) {
-            Log.d(TAG, "getXOffset() called with: " + "translateX = [" + translateX + "], pWidth = [" + pWidth + "]");
+//            Log.d(TAG, "getXOffset() called with: " + "translateX = [" + translateX + "], pWidth = [" + pWidth + "]");
             if (translateX + getWidth() > pWidth) {
                 Log.i(TAG, "getXOffset: ......");
                 bg.setBackground(new ShapeDrawable(new MarkerBgShape(0, getResources().getColor(R.color.white))));
@@ -442,17 +444,16 @@ public class SportChartActivity extends FragmentActivity implements OnChartValue
 
         @Override
         public int getYOffset(float translateY, int markViewHeight) {
-            Log.d(TAG, "getYOffset() called with: " + "translateY = [" + translateY + "], pHeight = [" + markViewHeight + "]");
+//            Log.d(TAG, "getYOffset() called with: " + "translateY = [" + translateY + "], pHeight = [" + markViewHeight + "]");
             return (int) -translateY - markViewHeight / 4;
         }
 
         @Override
         public int getTipYOffSet(float translateY, int markViewHeight, float containerTop) {
-            Log.d(TAG, "getTipYOffSet() called with: " + "translateY = [" + translateY + "], markViewHeight = [" + markViewHeight + "], containerTop = [" + containerTop + "]");
+//            Log.d(TAG, "getTipYOffSet() called with: " + "translateY = [" + translateY + "], markViewHeight = [" + markViewHeight + "], containerTop = [" + containerTop + "]");
             return (int) (-translateY - markViewHeight / 2 + containerTop);
         }
     }
-
 
 
 }

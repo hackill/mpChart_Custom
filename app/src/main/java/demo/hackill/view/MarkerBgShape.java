@@ -31,36 +31,41 @@ public class MarkerBgShape extends Shape {
     @Override
     public void draw(Canvas canvas, Paint paint) {
 
+        paint.reset();
         paint.setColor(backgroundColor);
         paint.setStyle(Paint.Style.FILL);
-        int mathLength = (int) (Math.sin(Math.PI / 4) * viewHeight);
+        int mathLength = (int) (viewHeight * Math.sin(Math.PI / 4));
         if (type == 0) {
-            canvas.drawCircle(viewHeight / 2, viewHeight / 2, viewHeight / 2, paint);
             bgRect.left = viewHeight / 2;
             bgRect.top = 0;
             bgRect.right = viewWidth - mathLength;
             bgRect.bottom = viewHeight;
-            canvas.drawRect(bgRect, paint);
             trianglePath.reset();
             trianglePath.moveTo(viewWidth - mathLength, 0);
             trianglePath.lineTo(viewWidth, viewHeight / 2);
             trianglePath.lineTo(viewWidth - mathLength, viewHeight);
             trianglePath.close();
+
+            canvas.drawCircle(viewHeight / 2, viewHeight / 2, viewHeight / 2, paint);
+            canvas.drawLine(viewWidth - mathLength, 0, viewWidth - mathLength, viewHeight, paint);
             canvas.drawPath(trianglePath, paint);
+            canvas.drawRect(bgRect, paint);
+
         } else {
-            canvas.drawCircle(viewWidth - viewHeight / 2, viewHeight / 2, viewHeight / 2, paint);
             bgRect.left = mathLength;
             bgRect.top = 0;
             bgRect.right = viewWidth - viewHeight / 2;
             bgRect.bottom = viewHeight;
-            canvas.drawRect(bgRect, paint);
-
             trianglePath.reset();
             trianglePath.moveTo(mathLength, 0);
             trianglePath.lineTo(0, viewHeight / 2);
             trianglePath.lineTo(mathLength, viewHeight);
             trianglePath.close();
+
+            canvas.drawCircle(viewWidth - viewHeight / 2, viewHeight / 2, viewHeight / 2, paint);
+            canvas.drawLine(mathLength, 0, mathLength, viewHeight, paint);
             canvas.drawPath(trianglePath, paint);
+            canvas.drawRect(bgRect, paint);
         }
     }
 

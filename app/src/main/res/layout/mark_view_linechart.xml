@@ -7,20 +7,20 @@
     android:orientation="horizontal">
 
     <ImageView
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="14dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="13dp"
         android:layout_marginBottom="1dp"
-        android:layout_marginLeft="15dp"
         android:layout_marginTop="1dp"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/step" />
 
     <TextView
         android:id="@+id/tv_steps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="15dp"
-        android:text="步数:234步"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="13dp"
+        android:text="步数:1234步"
         android:textColor="@color/step_bottom"
         android:textSize="14dp" />
 
