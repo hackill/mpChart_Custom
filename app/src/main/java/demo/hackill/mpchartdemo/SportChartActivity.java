@@ -319,7 +319,7 @@ public class SportChartActivity extends FragmentActivity implements OnChartValue
                 break;
             case R.id.month:
                 type = 3;
-                xCount = 30;
+                xCount = 31;
                 max = 1200;
                 break;
         }
@@ -361,8 +361,8 @@ public class SportChartActivity extends FragmentActivity implements OnChartValue
         for (int i = 0; i < count; i++) {
             float mult = (range + 1);
             float val = (float) (Math.random() * mult);
-            if (i == 3) {
-                val = 1;
+            if (i == 3 || i == 4 || i == 6) {
+                val = 0;
             } else if (i == count - 1) {
                 val = 100;
             }

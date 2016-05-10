@@ -34,6 +34,7 @@ public class MarkerBgShape extends Shape {
         paint.reset();
         paint.setColor(backgroundColor);
         paint.setStyle(Paint.Style.FILL);
+        paint.setAntiAlias(true);
         int mathLength = (int) (viewHeight * Math.sin(Math.PI / 4));
         if (type == 0) {
             bgRect.left = viewHeight / 2;
