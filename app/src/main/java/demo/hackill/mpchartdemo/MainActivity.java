@@ -52,5 +52,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, BgActivity.class));
             }
         });
+
+        findViewById(R.id.sport2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, SportMainActivity.class));
+            }
+        });
     }
 }

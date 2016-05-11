@@ -39,5 +39,11 @@
         android:layout_height="wrap_content"
         android:text="Sport_BG" />
 
+    <Button
+        android:id="@+id/sport2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sport2" />
+
 
 </LinearLayout>

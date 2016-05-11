@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -27,6 +28,8 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.YAxisValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.ChartTouchListener;
+import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.renderer.XAxisRenderer;
 import com.github.mikephil.charting.renderer.XAxisRendererBarChart;
@@ -65,12 +68,12 @@ public class SportChartActivity extends FragmentActivity implements OnChartValue
     };
 
     protected BarChart mChart;
-    @Bind(R.id.day)
-    Button day;
-    @Bind(R.id.week)
-    Button week;
-    @Bind(R.id.month)
-    Button month;
+//    @Bind(R.id.day)
+//    Button day;
+//    @Bind(R.id.week)
+//    Button week;
+//    @Bind(R.id.month)
+//    Button month;
     private Typeface mTf;
     private SeekBar mSeekBarX;
 
@@ -93,9 +96,9 @@ public class SportChartActivity extends FragmentActivity implements OnChartValue
         mChart = (BarChart) findViewById(R.id.energy_chart);
         mChart.setOnChartValueSelectedListener(this);
 
-        day.setOnClickListener(this);
-        week.setOnClickListener(this);
-        month.setOnClickListener(this);
+//        day.setOnClickListener(this);
+//        week.setOnClickListener(this);
+//        month.setOnClickListener(this);
 
 
         mSeekBarX = (SeekBar) findViewById(R.id.seekBar1);
@@ -137,6 +140,53 @@ public class SportChartActivity extends FragmentActivity implements OnChartValue
 //        mChart.setExtraRightOffset(35);
 
         mChart.setHighlightPerDragEnabled(true);
+
+        mChart.setOnChartGestureListener(new OnChartGestureListener() {
+            @Override
+            public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+                Log.d(TAG, "onChartGestureStart() called with: " + "me = [" + me + "], lastPerformedGesture = [" + lastPerformedGesture + "]");
+            }
+
+            @Override
+            public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+                Log.d(TAG, "onChartGestureEnd() called with: " + "me = [" + me + "], lastPerformedGesture = [" + lastPerformedGesture + "]");
+                mChart.highlightValue(null);
+            }
+
+            @Override
+            public void onChartLongPressed(MotionEvent me) {
+                Log.d(TAG, "onChartLongPressed() called with: " + "me = [" + me + "]");
+
+            }
+
+            @Override
+            public void onChartDoubleTapped(MotionEvent me) {
+                Log.d(TAG, "onChartDoubleTapped() called with: " + "me = [" + me + "]");
+
+            }
+
+            @Override
+            public void onChartSingleTapped(MotionEvent me) {
+
+                Log.d(TAG, "onChartSingleTapped() called with: " + "me = [" + me + "]");
+            }
+
+            @Override
+            public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
+                Log.d(TAG, "onChartFling() called with: " + "me1 = [" + me1 + "], me2 = [" + me2 + "], velocityX = [" + velocityX + "], velocityY = [" + velocityY + "]");
+
+            }
+
+            @Override
+            public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
+
+            }
+
+            @Override
+            public void onChartTranslate(MotionEvent me, float dX, float dY) {
+
+            }
+        });
 
         mChart.setGridBackgroundColor(getResources().getColor(R.color.transparent));
 
@@ -306,23 +356,23 @@ public class SportChartActivity extends FragmentActivity implements OnChartValue
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        switch (id) {
-            case R.id.day:
-                type = 1;
-                xCount = 24;
-                max = 300;
-                break;
-            case R.id.week:
-                type = 2;
-                xCount = 7;
-                max = 900;
-                break;
-            case R.id.month:
-                type = 3;
-                xCount = 31;
-                max = 1200;
-                break;
-        }
+//        switch (id) {
+//            case R.id.day:
+//                type = 1;
+//                xCount = 24;
+//                max = 300;
+//                break;
+//            case R.id.week:
+//                type = 2;
+//                xCount = 7;
+//                max = 900;
+//                break;
+//            case R.id.month:
+//                type = 3;
+//                xCount = 31;
+//                max = 1200;
+//                break;
+//        }
         updateLeftAxis(type);
         setData(xCount, max, type);
         mChart.invalidate();
@@ -330,13 +380,13 @@ public class SportChartActivity extends FragmentActivity implements OnChartValue
 
     @Override
     public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-//        Log.d(TAG, "onValueSelected() called with: " + "e = [" + e + "], dataSetIndex = [" + dataSetIndex + "], h = [" + h + "]");
+        Log.d(TAG, "onValueSelected() called with: " + "e = [" + e + "], dataSetIndex = [" + dataSetIndex + "], h = [" + h + "]");
 
     }
 
     @Override
     public void onNothingSelected() {
-//        Log.d(TAG, "onNothingSelected() called with: " + "");
+        Log.d(TAG, "onNothingSelected() called with: " + "");
 
     }
 

@@ -1,0 +1,10 @@
+<resources>
+
+    <string-array name="bong_bind">
+        <item>天</item>
+        <item>日</item>
+        <item>周</item>
+    </string-array>
+
+
+</resources>

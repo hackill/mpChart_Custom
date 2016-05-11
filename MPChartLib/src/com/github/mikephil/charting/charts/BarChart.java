@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 
 import com.github.mikephil.charting.components.YAxis.AxisDependency;
 import com.github.mikephil.charting.data.BarData;
@@ -64,6 +65,14 @@ public class BarChart extends BarLineChartBase<BarData> implements BarDataProvid
         mHighlighter = new BarHighlighter(this);
 
         mXChartMin = -0.5f;
+
+        mLongPressRunnable = new Runnable() {
+
+            @Override
+            public void run() {
+                isLongPressed = true;
+            }
+        };
     }
 
     @Override
@@ -243,5 +252,57 @@ public class BarChart extends BarLineChartBase<BarData> implements BarDataProvid
 
         getTransformer(AxisDependency.LEFT).pixelsToValue(pts);
         return (int) ((pts[0] >= getXChartMax()) ? getXChartMax() / div : (pts[0] / div));
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int mask = event.getAction() & MotionEvent.ACTION_MASK;
+
+        if (!isLongPressed) {
+            return true;
+        }
+
+        if (mask == MotionEvent.ACTION_CANCEL || mask == MotionEvent.ACTION_UP) {
+            isLongPressed = false;
+        }
+
+        return super.onTouchEvent(event);
+    }
+
+    private boolean isLongPressed = false;
+    private static final long LONG_PRESS_TIME = 100;
+    private float mLastMotionX, mLastMotionY;
+    private boolean isMoved;
+    private Runnable mLongPressRunnable;
+    private static final int TOUCH_SLOP = 20;
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        float x = event.getX();
+        float y = event.getY();
+        switch (event.getAction() & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_DOWN:
+                isLongPressed = false;
+                mLastMotionX = x;
+                mLastMotionY = y;
+                isMoved = false;
+                postDelayed(mLongPressRunnable, LONG_PRESS_TIME);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (isMoved)
+                    break;
+                if (Math.abs(mLastMotionX - x) > TOUCH_SLOP
+                        || Math.abs(mLastMotionY - y) > TOUCH_SLOP) {
+                    //移动超过阈值，则表示移动了
+                    isMoved = true;
+                    removeCallbacks(mLongPressRunnable);
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                removeCallbacks(mLongPressRunnable);
+                break;
+        }
+        return super.dispatchTouchEvent(event);
     }
 }

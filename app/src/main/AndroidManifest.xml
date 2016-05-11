@@ -20,6 +20,7 @@
         <activity android:name=".BarChartActivity" />
         <activity android:name=".SportChartActivity" />
         <activity android:name=".BgActivity" />
+        <activity android:name=".SportMainActivity" />
     </application>
 
 </manifest>
